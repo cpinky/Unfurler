@@ -1,4 +1,4 @@
-module SlackMathbot
+module PeerStreetBot
   module Commands
     class Calculate < SlackRubyBot::Commands::Base #Fun Stuff
       match /^Who are you/ do |client, data, match|
