@@ -25,5 +25,10 @@ module PeerStreetBot
         client.say(channel: data.channel, text: "Hello. https://media.tenor.com/images/c706798de97df582f20a164f60d21761/tenor.gif")
       end
     end
+    class LifeKey < SlackRubyBot::Commands::Base
+      match /^What is the key to life?/ do |client, data, match|
+        client.say(channel: data.channel, text: "Having the high ground. http://i.imgur.com/kGSWBbC.gif")
+      end
+    end
   end
 end
