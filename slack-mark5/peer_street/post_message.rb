@@ -4,30 +4,32 @@ module SlackMathbot
   module PeerStreet
     class PostMessage
       def self.post_messsage(event_hash)
+        require 'rubygems'
+        require 'confluence/api/client'
+
+        username = 'cpinkerton@peerstreet.com'
+        password = 'Ekg0AixtdNZijQARYROPYouzlN0uxu2aqFYjzWVb'
+        space    = 'General'
+        url      = 'https://peerstreet.atlassian.net/wiki'
+
+        id = /https:\/\/peerstreet.atlassian.net\/wiki\/spaces\/.*\/pages\/(\d+)\/.*/.match(event_hash["event"]["links"][0]["url"])[1]
+
+
+        wiki = Confluence::Api::Client.new(username, password, url)
+        response = wiki.conn.get "/wiki/rest/api/content/#{id}?expand=body.storage"
+        body = JSON.parse response.body
+
+
         client = Slack::Web::Client.new
-        client.chat_postMessage(channel: event_hash["event"]["channel"], text: 'She is the Goddess of Wisdom', as_user: true, "attachments": [
+        client.chat_postMessage(channel: event_hash["event"]["channel"], text: 'Get unfurled', as_user: true, "attachments": [
         {
           "fallback": "Required plain-text summary of the attachment.",
-          "color": "#36a64f",
-          "pretext": "This is really cool, like me",
-          "author_name": "Tony Stark",
+          "color": "#66CC33",
+          "author_name": "PeerStreet Wiki",
           "author_link": "https://www.peerstreet.com/",
-          "author_icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmsLHQ5E6duYJ-EQghTimUv7UxRufpsmqAjtjPaVH56kxJNkyGwM9ONg",
-          "title": "I am Iron Man",
-          "title_link": "https://api.slack.com/",
-          "text": "Saving everyone with my two iron hands",
-          "fields": [
-              {
-                  "title": "Who is the best avenger",
-                  "value": "Me",
-                  "short": false
-              }
-          ],
-          "image_url": "https://cdn1.iconfinder.com/data/icons/UltraBuuf/128/Ironman_Hand.png",
-          "thumb_url": "http://example.com/path/to/thumb.png",
-          "footer": "Avengers",
-          "footer_icon": "http://files.softicons.com/download/tv-movie-icons/iron-man-icon-set-by-svengraph/ico/Classic_Engine.ico",
-          "ts": 123456789
+          "author_icon": "https://cwiki.apache.org/confluence/images/logo/default-space-logo-256.png",
+          "title": body["title"],
+          "text": body[""],
         }
     ]
 )

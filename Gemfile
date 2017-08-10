@@ -6,6 +6,8 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'dotenv'
 gem 'celluloid-io'
+gem 'confluence-api-client'
+
 
 group :development, :test do
   gem 'rake'
