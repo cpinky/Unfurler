@@ -7,12 +7,12 @@ module SlackMathbot
         require 'rubygems'
         require 'confluence/api/client'
 
-        username = 'cpinkerton@peerstreet.com'
-        password = 'Ekg0AixtdNZijQARYROPYouzlN0uxu2aqFYjzWVb'
-        space    = 'General'
-        url      = 'https://peerstreet.atlassian.net/wiki'
+        username = '...'
+        password = '...'
+        space    = '...'
+        url      = '...'
 
-        id = /https:\/\/peerstreet.atlassian.net\/wiki\/spaces\/.*\/pages\/(\d+)\/.*/.match(event_hash["event"]["links"][0]["url"])[1]
+        id = /https:\/\/domain.atlassian.net\/wiki\/spaces\/.*\/pages\/(\d+)\/.*/.match(event_hash["event"]["links"][0]["url"])[1]
 
 
         wiki = Confluence::Api::Client.new(username, password, url)
@@ -25,8 +25,8 @@ module SlackMathbot
         {
           "fallback": "Required plain-text summary of the attachment.",
           "color": "#66CC33",
-          "author_name": "PeerStreet Wiki",
-          "author_link": "https://www.peerstreet.com/",
+          "author_name": "Wiki",
+          "author_link": "https://www.domain.com/",
           "author_icon": "https://cwiki.apache.org/confluence/images/logo/default-space-logo-256.png",
           "title": body["title"],
           "text": body[""],
