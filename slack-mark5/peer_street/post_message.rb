@@ -1,4 +1,6 @@
 require 'web'
+require 'byebug'
+require 'sanitize'
 
 module SlackMathbot
   module PeerStreet
@@ -8,7 +10,6 @@ module SlackMathbot
         require 'confluence/api/client'
 
         username = 'cpinkerton@peerstreet.com'
-        password = 'Ekg0AixtdNZijQARYROPYouzlN0uxu2aqFYjzWVb'
         space    = 'General'
         url      = 'https://peerstreet.atlassian.net/wiki'
 
@@ -19,21 +20,19 @@ module SlackMathbot
         response = wiki.conn.get "/wiki/rest/api/content/#{id}?expand=body.storage"
         body = JSON.parse response.body
 
-
         client = Slack::Web::Client.new
-        client.chat_postMessage(channel: event_hash["event"]["channel"], text: 'Get unfurled', as_user: true, "attachments": [
-        {
-          "fallback": "Required plain-text summary of the attachment.",
-          "color": "#66CC33",
-          "author_name": "PeerStreet Wiki",
-          "author_link": "https://www.peerstreet.com/",
-          "author_icon": "https://cwiki.apache.org/confluence/images/logo/default-space-logo-256.png",
-          "title": body["title"],
-          "text": body[""],
-        }
-    ]
-)
-
+        client.chat_postMessage(channel: event_hash["event"]["channel"], "attachments": [
+          {
+            "fallback": "Required plain-text summary of the attachment.",
+            "color": "#66CC33",
+            "author_name": "PeerStreet Wiki",
+            "author_link": event_hash["event"]["links"][0]["url"],
+            "author_icon": "https://peerstreet.atlassian.net/wiki/favicon.ico",
+            "title": body["title"],
+            #"text": /.*?<p>(.*?)<\/p>.*/.match(body["body"]["storage"]["value"])[1],
+            "text": Sanitize.clean(body["body"]["storage"]["value"]),
+          }
+        ])
       end
     end
   end
