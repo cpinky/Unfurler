@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'confluence/api/client'
 
-username = 'cpinkerton@peerstreet.com'
-password = 'Ekg0AixtdNZijQARYROPYouzlN0uxu2aqFYjzWVb'
+username = 'email'
+password = 'pass'
 space    = 'General'
-url      = 'https://peerstreet.atlassian.net/wiki'
+url      = 'wiki'
 
 
 client = Confluence::Api::Client.new(username, password, url)
