@@ -9,7 +9,7 @@ module SlackMathbot
         require 'rubygems'
         require 'confluence/api/client'
 
-        username = 'cpinkerton@peerstreet.com'
+        username = 'email'
         space    = 'General'
         url      = 'https://peerstreet.atlassian.net/wiki'
 
